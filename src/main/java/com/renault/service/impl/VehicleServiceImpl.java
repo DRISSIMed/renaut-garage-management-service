@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
@@ -36,7 +37,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public VehicleResponseDto createVehicle(Long garageId, VehicleRequestDto dto) throws MaxVehiculeExceedException {
+    public VehicleResponseDto createVehicle(Long garageId, VehicleRequestDto dto) throws MaxVehiculeExceedException, ExecutionException, InterruptedException {
         Optional<Garage> garage = Optional.of(garageRepository.findById(garageId)
                 .orElseThrow(() -> new ResourceNotFoundException("Garage not found with id: " + garageId)));
 
@@ -50,7 +51,7 @@ public class VehicleServiceImpl implements VehicleService {
 
         VehicleResponseDto responseDto = vehicleMapper.toDto(vehicleRepository.save(vehicle));
 
-        //vehicleEventPublisher.publishVehicleCreated(responseDto);
+        vehicleEventPublisher.publishVehicleCreated(responseDto);
 
         return responseDto;
     }

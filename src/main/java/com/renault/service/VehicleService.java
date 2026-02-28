@@ -5,9 +5,10 @@ import com.renault.dto.response.VehicleResponseDto;
 import com.renault.exception.MaxVehiculeExceedException;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface VehicleService {
-    VehicleResponseDto createVehicle(Long garageId, VehicleRequestDto dto) throws MaxVehiculeExceedException;
+    VehicleResponseDto createVehicle(Long garageId, VehicleRequestDto dto) throws MaxVehiculeExceedException, ExecutionException, InterruptedException;
 
     VehicleResponseDto updateVehicle(Long id, VehicleRequestDto dto);
 

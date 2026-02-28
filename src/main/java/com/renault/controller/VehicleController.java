@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/api/vehicles/v1")
@@ -22,7 +23,7 @@ public class VehicleController {
     @PostMapping("/{garageId}")
     public ResponseEntity<VehicleResponseDto> addVehicleToGarage(
             @PathVariable Long garageId,
-            @RequestBody @Valid VehicleRequestDto vehicleRequestDto) throws MaxVehiculeExceedException {
+            @RequestBody @Valid VehicleRequestDto vehicleRequestDto) throws MaxVehiculeExceedException, ExecutionException, InterruptedException {
         return ResponseEntity.ok(vehicleService.createVehicle(garageId, vehicleRequestDto));
     }
 
