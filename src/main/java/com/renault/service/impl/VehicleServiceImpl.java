@@ -50,7 +50,7 @@ public class VehicleServiceImpl implements VehicleService {
 
         VehicleResponseDto responseDto = vehicleMapper.toDto(vehicleRepository.save(vehicle));
 
-        vehicleEventPublisher.publishVehicleCreated(responseDto);
+        //vehicleEventPublisher.publishVehicleCreated(responseDto);
 
         return responseDto;
     }

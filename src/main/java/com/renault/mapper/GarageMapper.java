@@ -8,11 +8,10 @@ import com.renault.model.Garage;
 import com.renault.model.OpeningHour;
 import com.renault.model.OpeningTime;
 import org.mapstruct.*;
-
-import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.renault.enums.DayOfWeek;
 @Mapper(componentModel = "spring")
 public interface GarageMapper {
     @Mapping(target = "id", ignore = true)

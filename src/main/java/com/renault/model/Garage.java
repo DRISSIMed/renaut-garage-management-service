@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.DayOfWeek;
+import com.renault.enums.DayOfWeek;
 import java.util.*;
 @Entity
 @Table(name = "garages")
@@ -27,7 +27,7 @@ public class Garage {
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "day_of_week")
     @JoinColumn(name = "garage_id")
-    private Map<DayOfWeek, OpeningHour> openingHours = new HashMap<>();
+    private Map<DayOfWeek, OpeningHour> openingHoursList = new HashMap<>();
 
     @OneToMany(mappedBy = "garage", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Vehicle> vehicles = new ArrayList<>();

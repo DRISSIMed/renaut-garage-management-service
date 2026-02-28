@@ -4,8 +4,8 @@ spring:
       on-profile: local
   kafka:
     topic: garages-events
+    bootstrap-servers: localhost:9092
     producer:
-      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
@@ -13,11 +13,12 @@ spring:
         retries: 10
         retry.backoff.ms: 1000
     consumer:
-      bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: group1
       auto-offset-reset: latest
+      properties:
+        spring.json.trusted.packages: "*"
 garage:
   vehicle:
     quota: 50

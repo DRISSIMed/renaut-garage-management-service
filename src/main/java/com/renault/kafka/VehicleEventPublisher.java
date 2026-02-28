@@ -2,27 +2,29 @@ package com.renault.kafka;
 
 import com.renault.dto.response.VehicleResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
+@RequiredArgsConstructor
 public class VehicleEventPublisher {
-    private static final Logger log = LoggerFactory.getLogger(VehicleEventPublisher.class);
     private final KafkaTemplate<String, VehicleResponseDto> kafkaTemplate;
-    public VehicleEventPublisher(KafkaTemplate<String, VehicleResponseDto> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
     @Value("${spring.kafka.topic}")
-    private String TOPIC ;
-
-
+    private  String topic ;
 
     public void publishVehicleCreated(VehicleResponseDto vehicleResponse) {
-        kafkaTemplate.send(TOPIC, vehicleResponse);
-        log.info("Vehicle published to  topic '{}': {}", TOPIC, vehicleResponse);
-
+        kafkaTemplate.send(topic, vehicleResponse)
+                .whenComplete((result, ex) -> {
+                    if (ex == null) {
+                        log.info("Vehicle published to topic '{}': {}", topic, vehicleResponse);
+                    } else {
+                        log.error("Failed to publish vehicle", ex);
+                    }
+                });
     }
 }

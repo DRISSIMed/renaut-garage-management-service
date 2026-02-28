@@ -2,6 +2,7 @@ package com.renault.service.impl;
 
 import com.renault.dto.request.AccessoryRequestDto;
 import com.renault.dto.response.AccessoryResponseDto;
+import com.renault.exception.ResourceNotFoundException;
 import com.renault.mapper.AccessoryMapper;
 import com.renault.model.Accessory;
 import com.renault.model.Vehicle;
@@ -10,7 +11,7 @@ import com.renault.repository.VehicleRepository;
 import com.renault.service.AccessoryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class AccessoryServiceImpl implements AccessoryService {
     private final AccessoryMapper accessoryMapper;
 
     @Override
-    public AccessoryResponseDto createAccessory(Long vehicleId, AccessoryRequestDto dto) {
+    public AccessoryResponseDto createAccessory(Long vehicleId, AccessoryRequestDto dto) throws ResourceNotFoundException {
         Optional<Vehicle> vehicle = Optional.of(vehicleRepository.findById(vehicleId).orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id: " + vehicleId)));
         Accessory accessory = accessoryMapper.toEntity(dto);
         accessory.setVehicle(vehicle.get());
@@ -49,7 +50,7 @@ public class AccessoryServiceImpl implements AccessoryService {
     }
 
     @Override
-    public void deleteAccessory(Long id) {
+    public void deleteAccessory(Long id) throws ResourceNotFoundException {
         if(accessoryRepository.findById(id).isEmpty()){
             throw new ResourceNotFoundException("Accessory not found with id: " + id);
         }

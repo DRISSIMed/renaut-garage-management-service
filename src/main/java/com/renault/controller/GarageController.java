@@ -23,7 +23,7 @@ public class GarageController {
     }
 
     @PostMapping
-    public ResponseEntity<GarageResponseDto> createGarage(@RequestBody @Valid GarageRequestDto dto) {
+    public ResponseEntity<GarageResponseDto> createGarage(@RequestBody  GarageRequestDto dto) {
         return ResponseEntity.ok(garageService.createGarage(dto));
     }
 

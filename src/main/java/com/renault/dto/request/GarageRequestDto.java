@@ -3,7 +3,7 @@ package com.renault.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
-import java.time.DayOfWeek;
+import com.renault.enums.DayOfWeek;
 import java.util.Map;
 
 public record GarageRequestDto(
@@ -16,6 +16,6 @@ public record GarageRequestDto(
         @NotBlank
         String email,
         @NotEmpty
-        Map<DayOfWeek, OpeningHourDto> openingHours
+        Map<DayOfWeek, OpeningHourDto> openingHoursList
 ) {
 }

@@ -2,6 +2,7 @@ package com.renault.controller;
 
 import com.renault.dto.request.AccessoryRequestDto;
 import com.renault.dto.response.AccessoryResponseDto;
+import com.renault.exception.ResourceNotFoundException;
 import com.renault.service.AccessoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AccessoryController {
     @PostMapping("/{vehicleId}")
     public ResponseEntity<AccessoryResponseDto> addAccessoryToVehicle(
             @PathVariable Long vehicleId,
-            @RequestBody @Valid AccessoryRequestDto dto) {
+            @RequestBody @Valid AccessoryRequestDto dto) throws ResourceNotFoundException {
         return ResponseEntity.ok(accessoryService.createAccessory(vehicleId, dto));
     }
 
@@ -39,7 +40,7 @@ public class AccessoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAccessory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAccessory(@PathVariable Long id) throws ResourceNotFoundException {
         accessoryService.deleteAccessory(id);
         return ResponseEntity.noContent().build();
     }
