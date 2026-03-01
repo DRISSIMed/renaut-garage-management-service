@@ -1,0 +1,67 @@
+{
+  "name": "Garage Atlas 23",
+  "address": "123 Avenue Hassan II, Fès",
+  "telephone": "+212600000000",
+  "email": "contact@garageatlas.ma",
+  "openingHoursList": {
+    "MONDAY": {
+      "openingTimes": [
+        {
+          "startTime": "08:30:00",
+          "endTime": "12:30:00"
+        },
+        {
+          "startTime": "14:00:00",
+          "endTime": "18:00:00"
+        }
+      ]
+    },
+    "TUESDAY": {
+      "openingTimes": [
+        {
+          "startTime": "08:30:00",
+          "endTime": "18:00:00"
+        }
+      ]
+    },
+    "WEDNESDAY": {
+      "openingTimes": [
+        {
+          "startTime": "08:30:00",
+          "endTime": "18:00:00"
+        }
+      ]
+    },
+    "THURSDAY": {
+      "openingTimes": [
+        {
+          "startTime": "08:30:00",
+          "endTime": "18:00:00"
+        }
+      ]
+    },
+    "FRIDAY": {
+      "openingTimes": [
+        {
+          "startTime": "08:30:00",
+          "endTime": "12:30:00"
+        },
+        {
+          "startTime": "14:30:00",
+          "endTime": "17:30:00"
+        }
+      ]
+    },
+    "SATURDAY": {
+      "openingTimes": [
+        {
+          "startTime": "09:00:00",
+          "endTime": "13:00:00"
+        }
+      ]
+    },
+    "SUNDAY": {
+      "openingTimes": []
+    }
+  }
+}
