@@ -3,6 +3,7 @@ package com.renault.service.impl;
 import com.renault.dto.request.OpeningHourDto;
 import com.renault.dto.request.OpeningTimeDto;
 import com.renault.enums.DayOfWeek;
+import com.renault.model.OpeningHour;
 import org.junit.jupiter.api.Test;
 
 import com.renault.dto.request.GarageRequestDto;
@@ -98,15 +99,29 @@ class GarageServiceImplTest {
 
     @Test
     void updateGarage_shouldReturnUpdatedDto() {
+        Map<DayOfWeek, OpeningHourDto> openingHours = Map.of(
+                DayOfWeek.MONDAY, new OpeningHourDto(List.of(new OpeningTimeDto(LocalTime.of(9, 0), LocalTime.of(18, 0))))
+        );
+        GarageRequestDto requestDto = new GarageRequestDto(
+                "Renault Garage", "123 Street", "0600000000", "garage@renault.com", openingHours
+        );
+        Garage garage = new Garage();
+        garage.setId(1L);
+        garage.setOpeningHoursList(new HashMap<>());
         when(garageRepository.findById(1L)).thenReturn(Optional.of(garage));
         doNothing().when(garageMapper).updateGarageFromDto(requestDto, garage);
         when(garageRepository.save(garage)).thenReturn(garage);
         when(garageMapper.toDto(garage)).thenReturn(responseDto);
-
         GarageResponseDto result = garageService.updateGarage(1L, requestDto);
-
         assertNotNull(result);
         assertEquals("Renault Garage", result.name());
+        assertFalse(garage.getOpeningHoursList().isEmpty());
+        assertTrue(garage.getOpeningHoursList().containsKey(DayOfWeek.MONDAY));
+
+        verify(garageRepository).findById(1L);
+        verify(garageMapper).updateGarageFromDto(requestDto, garage);
+        verify(garageRepository).save(garage);
+        verify(garageMapper).toDto(garage);
     }
 
     @Test

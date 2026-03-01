@@ -4,6 +4,8 @@ import com.renault.dto.request.GarageRequestDto;
 import com.renault.dto.response.GarageResponseDto;
 import com.renault.mapper.GarageMapper;
 import com.renault.model.Garage;
+import com.renault.model.OpeningHour;
+import com.renault.model.OpeningTime;
 import com.renault.repository.GarageRepository;
 import com.renault.service.GarageService;
 import jakarta.transaction.Transactional;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -37,6 +40,22 @@ public GarageResponseDto updateGarage(Long id, GarageRequestDto dto) {
     Optional<Garage> garage = Optional.of(garageRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Garage not found with id: " + id)));
     garageMapper.updateGarageFromDto(dto, garage.get());
+    if (dto.openingHoursList() != null) {
+        garage.get().getOpeningHoursList().clear();
+        dto.openingHoursList().forEach((day, openingHourDto) -> {
+            OpeningHour openingHour = new OpeningHour();
+            List<OpeningTime> openingTimes = openingHourDto.getOpeningTimes().stream()
+                    .map(openingTimeDto -> {
+                        OpeningTime openingTime = new OpeningTime();
+                        openingTime.setStartTime(openingTimeDto.startTime());
+                        openingTime.setEndTime(openingTimeDto.endTime());
+                        openingTime.setOpeningHour(openingHour);
+                        return openingTime;
+                    }).collect(Collectors.toList());
+            openingHour.setOpeningTimes(openingTimes);
+            garage.get().getOpeningHoursList().put(day, openingHour);
+        });
+    }
     return garageMapper.toDto(garageRepository.save(garage.get()));
 }
 

@@ -23,6 +23,7 @@ public interface GarageMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "vehicles", ignore = true)
+    @Mapping(target = "openingHoursList", ignore = true)
     void updateGarageFromDto(GarageRequestDto dto, @MappingTarget Garage garage);
 
 

@@ -23,7 +23,7 @@ public class Garage {
     private String address;
     private String telephone;
     private String email;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "day_of_week")
     @JoinColumn(name = "garage_id")
