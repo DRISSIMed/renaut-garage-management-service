@@ -110,18 +110,6 @@ class GarageControllerTest {
     }
 
     @Test
-    void getGarageById() {
-    }
-
-    @Test
-    void searchGaragesByAccessory() {
-    }
-
-    @Test
-    void getAllGarages() {
-    }
-
-    @Test
     void deleteGarage() throws Exception {
         String response = mockMvc.perform(post("/api/garages/v1")
                         .contentType(MediaType.APPLICATION_JSON)

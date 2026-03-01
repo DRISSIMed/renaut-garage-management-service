@@ -10,7 +10,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {AccessoryMapper.class})
 public interface VehicleMapper {
     Vehicle toEntity(VehicleRequestDto dto);
-
     VehicleResponseDto toDto(Vehicle entity);
     @Mapping(target = "accessories", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
